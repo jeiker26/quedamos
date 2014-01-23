@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <!--<script type="text/javascript" src="jquery-1.4.2.min.js"></script>-->
+    
+    <!--CSS-->
+    <link rel="stylesheet" type="text/css" href="./lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./lib/ladda/dist/ladda-themeless.min.css">
+    
+    <!--CSS Mis estilos-->
+    <link rel="stylesheet" type="text/css" href="./css/mystyle.css">
+    
+    <!--Jacascript-->
+    <script src="./lib/jquery/jquery-2.0.3.min.js"></script>
+    <script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+    
+   
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDltsG1DK1kQ4zpFQ5PHM-3jmp_0PcFAfU&sensor=true">//Sensor true o false
+    </script>
+    <script type="text/javascript">
+      var points = [];
+      var i = 0;
+      var mapOptions;
+      var marker = [];
+      var map;
+      function initialize(address,user,description) {
+          mapOptions = {
+          center: new google.maps.LatLng(39.772131,-0.373535),//40.505691, -3.831482),
+          zoom: 7,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+        if(address,user,description){
+            initializes(address,i);
+            points[i] = address;
+            i++;
+        }
+      }
+      function initializes(address,user,description,i) {
+	var geoCoder = new google.maps.Geocoder(address)
+	var request = {address:address};
+	geoCoder.geocode(request, function(result, status){
+		var latlng = new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng());
+		var myOptions = {
+		  zoom: 15,
+		  center: latlng,
+		  mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+        //map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);//new google.maps.Map(document.getElementById("map_canvas"),myOptions);
+		marker[i] = new google.maps.Marker({position:latlng,map:map,title:address},marker[i-1]);
+	})
+  }
+    </script>
+    <script>
+    $(document).ready(function(){
+        //initialize('Madrid');
+        $('#event').bind('click',function(){
+            initialize($('#address').val(),$('#user').val(),$('#description').val());    
+        });
+    })
+    </script>
+  </head>
+  <body onload="initialize()">
+      
+     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Quedadas</a>
+        </div>
+        <div class="navbar-collapse collapse" id="menu_top">
+          <div class="navbar-form navbar-right" id="login-content">
+            <div class="form-group">
+              <input type="text" placeholder="Email" name="log-email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" name="log-password" class="form-control">
+            </div>
+            <button id="login-submit" class="btn btn-success">Acceso</button>
+            <a href="#registro" class="btn btn-link" data-toggle="modal" data-target="#myModal">Registro</a>
+          </div>
+         
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+    
+    <div class="content">  
+        <div id="map_canvas"></div>
+        <div class="col-xs-3 col-xs-offset-9 menu_lateral">
+            <div id="error-form-log"></div>
+            <div class="formula">
+                <form action="index.html">
+                    <div class="input-group">
+                       <span class="input-group-addon "><span class="glyphicon glyphicon-user"></span></span>
+                       <input type="text" id="user" class="form-control" placeholder="Organizador">
+                    </div>
+                    <div class="input-group">
+                       <span class="input-group-addon "><span class="glyphicon glyphicon-link"></span></span>
+                       <input type="text" id="address" class="form-control" placeholder="Direccion">
+                    </div>
+                    <div class="input-group">
+                       <span class="input-group-addon "><span class="glyphicon glyphicon-edit"></span></span>
+                       <textarea id="description" class="form-control" placeholder="Descripcion de la acctividad..."></textarea>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> <a href="#condiciones">Condiciones</a>
+                        </label>
+                    </div>
+                    <button type="button" id="event" class="btn btn-success btn-block">Crear evento</button>
+                </form>
+            </div>
+        </div>
+    </div>
+      
+    <!----------------------------------------MODAL-------------------------->
+    <!-- CONTENIDO MODAL -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <!--Boton cerrar-->
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">Registrate</h4>
+            </div>
+            <div class="modal-body"> 
+              <!--FORMULARIO--> 
+              <div id="error-form" class="alert alert-danger hidden"></div>
+              
+                  <!--REGISTRO-->
+                  <div class="tab-pane" id="register-content">                          
+                        <div class="input-group">
+                            <span class="input-group-addon "><span class="glyphicon glyphicon-user"></span></span>
+                            <input type="text" name="user-name"  class="form-control" placeholder="Nombre Usuario">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon "><span class="glyphicon glyphicon-envelope"></span></span>
+                            <input type="email" name="user-email" class="form-control" placeholder="Email">
+                        </div>
+                        <div class="input-group">
+                          <span class="input-group-addon "><span class="glyphicon glyphicon-lock"></span></span>
+                          <input type="password" name="user-password" class="form-control" placeholder="Contraseña">
+                        </div>                          
+                      <!--<button type="button" id="register-submit" class="btn btn-success btn-block">Registrarme</button>-->
+                      <section class="button-demo">
+				<button id="register-submit" class="ladda-button btn btn-success btn-block" data-style="contract-overlay" style="z-index: 10;">Submit</button>
+                      </section>
+                  </div>
+              </div>
+            </div>
+          </div>     
+      </div>
+    <!------------------------------------------------------------------>
+    
+    <!--JS-->
+    <script src="./js/manager/loginAjax.js"></script>
+    <script src="./lib/ladda/dist/spin.min.js"></script>
+    <script src="./lib/ladda/dist/ladda.min.js"></script>
+
+
+  </body>
+</html>
