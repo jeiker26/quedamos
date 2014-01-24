@@ -73,6 +73,18 @@
             $result = mysqli_query($db,$query);
             return $result;
         }
+        
+        function forgetPass($mail){
+            if(mysqli_num_rows(get_data('user_email',$mail)) === 0){
+                return "No hay ningún usuario registrado con ese email.";
+            }else{
+                $content_user_data = mysqli_fetch_array(get_data('user_email',$mail));
+                $cuerpo = "Hola tu contraseña es".$content_user_data['user_password'];
+                send_mail($mail, $cuerpo);
+            }
+        }
+
+
         //insertUser('test','jesusgraficap@gmail.com','test');
 	
 ?>

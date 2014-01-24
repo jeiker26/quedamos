@@ -8,6 +8,15 @@ $(function() {
     $('#register-submit').click(function() {
         regSend();
     });
+    
+    $('#view-forget-pass').click(function() {
+        viewForgetPass();
+    });
+    
+    $('#forget-pass').click(function() {
+       forgetPass(); 
+    });
+    
     Ladda.bind( '.button-demo button', { timeout: 4000 } );
 
     /*FUNCIONES*/
@@ -75,5 +84,32 @@ $(function() {
             }else{
                 console.log ("Error al registrar el usuario, intentelo más tarde.");
             }
+    }
+    
+    function viewForgetPass(){
+        //Generar nuevo formulario de olvido de contraseña
+        $('#modal-title').html('Introduce su email para recuperar la contraseña: ');
+        
+        formRegister.find('input[name = user-name]').parent().addClass('hidden');
+        formRegister.find('input[name = user-password]').parent().addClass('hidden');
+        formRegister.find('#register-submit').parent().addClass('hidden');
+        formRegister.find('#view-forget-pass').addClass('hidden');
+        
+        formRegister.find('#forget-pass').removeClass('hidden');
+    }
+    
+    function forgetPass(){
+      $.ajax({
+        type: 'POST',
+        url: 'php/manager/mapToro/forgetPass',
+        dataType: 'text',
+        data: { 
+                email: formRegister.find('input[name = user-email]').val() }
+      }).done(function(data) {
+        $('#error-form').html(data);
+        console.log("error",data);
+      }).fail(function() {
+        console.log("error", arguments);
+      });
     }
   });

@@ -22,10 +22,19 @@ class ActivateUser{
     activateUser($code);
   }
 }
+
+class ForgetPass{
+    function post(){
+        echo forgetPass($_POST['email']);
+    }
+}
+
+
 Toro::serve(array(
     "/insertUser" => "InsertUser",
     "/logUser" => "LogUser",
-    "/activate/([a-zA-Z0-9-_]+)" => "ActivateUser"
+    "/activate/([a-zA-Z0-9-_]+)" => "ActivateUser",
+    "/forgetPass" => "ForgetPass"
 ));
 
 ?>

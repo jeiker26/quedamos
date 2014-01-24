@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <!--<script type="text/javascript" src="jquery-1.4.2.min.js"></script>-->
     
@@ -129,7 +130,7 @@
             <!--Boton cerrar-->
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Registrate</h4>
+              <h4 id="modal-title" class="modal-title">Registrate</h4>
             </div>
             <div class="modal-body"> 
               <!--FORMULARIO--> 
@@ -151,8 +152,12 @@
                         </div>                          
                       <!--<button type="button" id="register-submit" class="btn btn-success btn-block">Registrarme</button>-->
                       <section class="button-demo">
-				<button id="register-submit" class="ladda-button btn btn-success btn-block" data-style="contract-overlay" style="z-index: 10;">Submit</button>
+				<button id="register-submit" class="ladda-button btn btn-success btn-block" data-style="contract-overlay" style="z-index: 10;">Registrarse</button>
                       </section>
+                      <section class="button-demo">
+				<button id="forget-pass" class="ladda-button btn btn-success btn-block hidden" data-style="contract-overlay" style="z-index: 10;">Enviar</button>
+                      </section>
+                      <a id="view-forget-pass" class="btn btn-link ">¿Olvidaste la contraseña?</a>
                   </div>
               </div>
             </div>
