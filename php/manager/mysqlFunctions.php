@@ -42,11 +42,16 @@
 		global $db;
 		$query = "SELECT * FROM users WHERE user_email='$email' and user_password='$password'";
 		$result = mysqli_query($db,$query);
-		$row = mysqli_fetch_array($result);
-                if($row['user_state'] == 'activate')
-                    return "Bienvenido, ".$row['user_name'];
-                else
-                    return "El usuario ".$row['user_name'].", no ha sido activado.";
+                $row = mysqli_fetch_array($result);
+                $user_state = $row['user_state'];
+                if(mysqli_num_rows($result) != 0){
+                    if($user_state == 'activate')
+                        return "Bienvenido, ".$row['user_name'];
+                    else
+                        return 2;//Error: El usuario no esta activo.
+                }else{
+                    return 3;//Error: Los datos no son correctos.
+                }
 	}
         
         function activateUser($code){

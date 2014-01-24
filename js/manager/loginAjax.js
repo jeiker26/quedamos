@@ -46,7 +46,7 @@ $(function() {
                 email: formLogin.find('input[name = log-email]').val(),
                 password: formLogin.find('input[name = log-password]').val() }
       }).done(function(data) {
-        $('#error-form-log').html();
+        $('#error-login').html(data);
         //Cambio de interfaz
         viewUser(data);
       }).fail(function() {
@@ -55,20 +55,27 @@ $(function() {
     }
    
     function viewUser(user_name) {
-        if(user_name){
+        console.log(user_name);
+        if(user_name == 2){
+            $('#error-login').html("El usuario no esta activado revise su email.");
+            $('#error-login').removeClass('hidden');
+        }else if(user_name == 3){
+            $('#error-login').html("Los datos introducidos no son correctos.");
+            $('#error-login').removeClass('hidden');
+        
+        }else if(user_name){
             $('#login-content').remove();
             var $newElement = $('<a/>', {
                html : user_name,
                href : '#user'
             });
-
             $newElement.appendTo('#menu_top');
-        }else{
-            console.log ("El email y la contraseña no coinciden.");
+            
+            $('#error-login').addClass('hidden');
         }
     }
     
-    function viewRegUser(txt_reg){
+    function viewRegUser(txt_reg,type_operator){
         debugger;
         
         if(txt_reg == 1){
@@ -83,6 +90,19 @@ $(function() {
         }else{
             console.log ("Error al registrar el usuario, intentelo más tarde.");
         }
+        
+        if(type_operator){
+            if(txt_reg){
+                $('#error-form').html(txt_reg);
+                $('#error-form').removeClass('hidden');
+            }else{
+                $('#error-form').html("Recibiras un email con tus datos de configuración.");
+                $('#error-form').removeClass('hidden');
+                $('#error-form').removeClass('alert-danger');
+                $('#error-form').addClass('alert-success');
+                $(':input','#register-content').val('');
+            }
+        }
     }
     
     function viewForgetPass(){
@@ -94,6 +114,7 @@ $(function() {
         formRegister.find('#register-submit').parent().addClass('hidden');
         formRegister.find('#view-forget-pass').addClass('hidden');
         
+        $(':input','#register-content').val('');
         formRegister.find('#forget-pass').removeClass('hidden');
     }
     
@@ -106,9 +127,14 @@ $(function() {
                 email: formRegister.find('input[name = user-email]').val() }
       }).done(function(data) {
         $('#error-form').html(data);
-        console.log("error",data);
+        console.log(data);
+        viewRegUser(data,"forgetPass");
       }).fail(function() {
         console.log("error", arguments);
       });
+    }
+    
+    function loadHtml(html){
+        $('html').load('index.html');
     }
   });
