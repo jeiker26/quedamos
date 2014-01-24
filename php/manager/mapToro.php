@@ -18,14 +18,14 @@ class LogUser{
 }
 
 class ActivateUser{
-  function get(){
-    echo activateUser($code);
+  function get($code){
+    activateUser($code);
   }
 }
 Toro::serve(array(
     "/insertUser" => "InsertUser",
     "/logUser" => "LogUser",
-    "/activar/:string" => "ActivateUser"
+    "/activate/([a-zA-Z0-9-_]+)" => "ActivateUser"
 ));
 
 ?>

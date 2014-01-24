@@ -64,7 +64,7 @@ $(function() {
             $('#register-content').remove();
             var $newElement = $('<a/>', {
                html : txt_reg,
-               href : 'http://localhost/git/GoogleMaps/Mapa,buscarNombre/'
+               href : 'http://localhost/git/quedamos/'
             });
             
             $newElement.appendTo('#error-form');
