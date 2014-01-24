@@ -17,7 +17,7 @@ $(function() {
        forgetPass(); 
     });
     
-    Ladda.bind( '.button-demo button', { timeout: 4000 } );
+    Ladda.bind( '.button-demo button', { timeout: 2000 } );
 
     /*FUNCIONES*/
     function regSend(){
@@ -46,7 +46,7 @@ $(function() {
                 email: formLogin.find('input[name = log-email]').val(),
                 password: formLogin.find('input[name = log-password]').val() }
       }).done(function(data) {
-        $('#error-form-log').html(data);
+        $('#error-form-log').html();
         //Cambio de interfaz
         viewUser(data);
       }).fail(function() {
@@ -69,21 +69,20 @@ $(function() {
     }
     
     function viewRegUser(txt_reg){
-        if(txt_reg){
-            $('#register-content').remove();
-            var $newElement = $('<a/>', {
-               html : txt_reg,
-               href : 'http://localhost/git/quedamos/'
-            });
-            
-            $newElement.appendTo('#error-form');
+        debugger;
+        
+        if(txt_reg == 1){
+            $('#ok-form').html("Hemos enviado un mensaje de activación a su direccion de correo electrónico.");
+            $('#ok-form').removeClass('hidden');
+            $('#error-form').addClass('hidden');
+            //Limpiar campos del formulario
+            $(':input','#register-content').val('');
+        }else if(txt_reg){
+            $('#error-form').html(txt_reg);
             $('#error-form').removeClass('hidden');
-            $('#error-form').removeClass('alert-danger');
-            $('#error-form').addClass('alert-sucess');
-            
-            }else{
-                console.log ("Error al registrar el usuario, intentelo más tarde.");
-            }
+        }else{
+            console.log ("Error al registrar el usuario, intentelo más tarde.");
+        }
     }
     
     function viewForgetPass(){

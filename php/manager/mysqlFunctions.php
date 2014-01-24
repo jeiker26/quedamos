@@ -23,7 +23,7 @@
                            if(send_mail($email, $cuerpo)){
                                     $query_state_null = "UPDATE users SET user_state='$code' WHERE user_name='".$name."'";
                                     mysqli_query($db,$query_state_null);
-                                    return "Mensaje de activacion enviado a su bandeja de entrada";
+                                    return 1;
                             }else{ 
                                 return "El email introducido no es válido.";
                             }
